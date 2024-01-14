@@ -28,12 +28,12 @@ class TalkConsumer(WebsocketConsumer):
         async_to_sync(self.channel_layer.group_add)(self.group_name, self.channel_name)
 
         # User joined notification
-        html = get_template('join.hmtl').render(context={'user': self.user})
+        html = get_template('partial/join.hmtl').render(context={'user': self.user})
         self.send(text_data=html)
 
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(self.group_name, self.channel_name)
-        html = get_template('leave.hmtl').render(context={'user': self.user})
+        html = get_template('partial/leave.hmtl').render(context={'user': self.user})
         self.send(
             text_data=html
         )
